@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  font: inherit;
+}
+
+body {
+  background-color: #111311;
+  font-family: "Nunito", sans-serif;
+}
+
+p,
+h2 {
+  color: #fefffe;
+}
+
+.user-handle {
+  color: #979897;
+}
+
+
+ /* POSTS */
+
+main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.posts-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 40em;
+    border: 1px solid #2b2e2b;
+    min-height: 100svh;
+}
+
+.user-id {
+    display: flex;
+    gap: 0.5em;
+}
+
+.user-icon {
+    width: 50px;
+    height: 50px;
+    background-color: green;
+    border-radius: 9999px;
+    flex-shrink: 0;
+    margin-right: 0.5em;
+}
+
+.single-post {
+    display: flex;
+    justify-content: center;
+    border-bottom: 1px solid #2b2e2b;
+    padding: 1em 1em;
+}
+
+.text-side > p {
+    margin-top: 0.2em;
+    line-height: 25px;
+}
+
+.user-id > a {
+  color: #fefffe;
+  font-weight: bold;
+}
+
+.user-id > a:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.interactions {
+  display: flex;
+  gap: 2em;
+  margin-top: .3em;
+}
+
+.interactions img {
+  width: 18px;
+}
+
+/* USER */
+
+header {
+  position: relative;
+  background-image: url("/img/banner.webp");
+  height: 170px;
+}
+
+#user-icon-header {
+  position: absolute;
+  width: 140px;
+  border-radius: 9999px;
+  top: 6em;
+  left: 2em;
+  border: 5px solid #1C821F;
+}
+
+.user-info {
+  margin-top: 6em;
+  margin-left: 2em;
+}

@@ -1,0 +1,4 @@
+{
+    "java.autobuild.enabled": true,
+    "compiler.automake.allow.when.app.running": true
+}
