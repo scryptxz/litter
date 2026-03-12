@@ -9,6 +9,7 @@
 body {
   background-color: #111311;
   font-family: "Nunito", sans-serif;
+  color: #fefffe;
 }
 
 p,
@@ -33,7 +34,8 @@ main {
     display: flex;
     flex-direction: column;
     max-width: 40em;
-    border: 1px solid #2b2e2b;
+    border-left: 1px solid #2b2e2b;
+    border-right: 1px solid #2b2e2b;
     min-height: 100svh;
 }
 
@@ -103,4 +105,38 @@ header {
 .user-info {
   margin-top: 6em;
   margin-left: 2em;
+}
+
+.user-statistics {
+  list-style: none;
+  display: flex;
+  gap: 1em;
+  margin-top: .5em;
+}
+
+.user-statistics span {
+  color: #1ED760;
+  font-weight: bold;
+}
+
+#user-bio {
+  font-style: italic;
+  margin-top: .5em;
+}
+
+.user-nav {
+  display: flex;
+  list-style: none;
+  margin-top: 1em;
+  text-align: center;
+}
+
+.user-nav li {
+  width: 100%;
+  padding: .5em;
+  cursor: pointer;
+}
+.user-nav li:nth-child(1) {
+  border-bottom: 3px solid #1ED760;
+  width: 100%;
 }
