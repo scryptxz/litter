@@ -3,9 +3,9 @@ server:
 
 spring:
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/noite
-    username: postgres
-    password: root
+    url: postgresql://dpg-d7gmftpf9bms73eispdg-a.oregon-postgres.render.com/noite_database
+    username: admin
+    password: asGhwfiJnyJperOP1xnhPJF9lkb50IxS
     driverClassName: org.postgresql.Driver
 
   jpa:
