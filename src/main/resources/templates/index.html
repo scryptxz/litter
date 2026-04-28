@@ -8,7 +8,7 @@
   </head>
   <body>
     <main>
-       <ul class="left-menu">
+      <ul class="left-menu">
         <li id="litter-logo">
           <a th:href="@{/}">
             <img th:src="@{img/litter-logo.png}" />
@@ -42,7 +42,9 @@
         </form>
         <div class="db-posts">
           <div class="single-post" th:each="post : ${posts}">
-            <img th:src="@{img/icon.jpg}" class="user-icon" alt="" />
+            <a th:href="@{/user}">
+              <img th:src="@{img/icon.jpg}" class="user-icon" alt="" />
+            </a>
             <div class="text-side">
               <div class="user-id">
                 <a th:href="@{/user}">Doglas</a>

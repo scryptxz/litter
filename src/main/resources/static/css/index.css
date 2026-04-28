@@ -42,7 +42,7 @@ main {
   display: flex;
   align-items: start;
   justify-content: center;
-  /* margin: 0 20em; */
+  padding: 0 5em;
 }
 
 .posts-container {
@@ -52,11 +52,26 @@ main {
   border-left: 1px solid #2b2e2b;
   border-right: 1px solid #2b2e2b;
   min-height: 100svh;
+  margin: 0 2em;
+  width: 100%;
 }
 
 .db-posts {
   display: flex;
   flex-direction: column-reverse;
+}
+
+.single-post {
+  position: relative;
+  display: flex;
+  border-bottom: 1px solid #2b2e2b;
+  padding: 1em 1em;
+  max-width: 100%;
+}
+
+.text-side > p {
+  margin-top: 0.2em;
+  line-height: 25px;
 }
 
 .user-id {
@@ -73,14 +88,6 @@ main {
   margin-right: 0.5em;
 }
 
-.single-post {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid #2b2e2b;
-  padding: 1em 1em;
-}
-
 .trash-icon {
   position: absolute;
   top: 12px;
@@ -89,11 +96,6 @@ main {
   cursor: pointer;
 }
 
-.text-side > p {
-  margin-top: 0.2em;
-  line-height: 25px;
-  width: 550px;
-}
 
 .user-id > a {
   color: #fefffe;
@@ -250,7 +252,7 @@ header {
 .left-menu li {
   display: flex;
   align-items: center;
-  word-break: keep-all;
+  text-wrap: nowrap;
 }
 
 .left-menu a {
@@ -285,7 +287,7 @@ header {
   position: relative;
 }
 
-.trends li::after {
+.trends li::before {
   content: "Assunto do momento";
   font-weight: lighter;
   color: rgba(255, 255, 255, 0.3);
@@ -295,11 +297,26 @@ header {
   left: 0;
 }
 
+#trends-title::before {
+  display: none;
+}
+
 #trends-title {
   font-size: 1.4rem;
   color: #1ed760;
 }
 
-#trends-title::after {
-  display: none;
+
+@media (max-width: 800px) {
+  .left-menu {
+    display: none;
+  }
+
+  .trends {
+    display: none;
+  }
+
+  main {
+    padding: 0;
+  }
 }
