@@ -307,16 +307,17 @@ header {
 }
 
 
-@media (max-width: 800px) {
-  .left-menu {
-    display: none;
-  }
-
+@media (max-width: 1000px) {
+  .left-menu,
   .trends {
     display: none;
   }
 
   main {
     padding: 0;
+  }
+
+  .posts-container {
+    margin: 0;
   }
 }
