@@ -22,8 +22,12 @@ public class AppController {
     @Autowired
     private ApplicationContext context;
 
-    @GetMapping("/user")
-    public String userPage() {
+    @GetMapping("/user/{uuid}")
+    public String listUserPosts(@PathVariable String uuid, Model model) {
+        PostService cs = context.getBean(PostService.class);
+        ArrayList<Post> posts = (ArrayList<Post>) cs.listUserPosts(uuid);
+        model.addAttribute("user_posts", posts);
+        model.addAttribute("user_post", new Post());
         return "user";
     }
 

@@ -1,6 +1,7 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
+    <meta charset="UTF-8">
     <title>Litter</title>
     <link rel="stylesheet" th:href="@{css/index.css}" />
     <script th:src="@{js/index.js}"></script>
@@ -37,19 +38,20 @@
             <textarea
               th:field="*{content}"
               placeholder="O que você está planejando hoje?"
+              maxlength="256"
             ></textarea>
           </div>
           <button>Postar</button>
         </form>
         <div class="db-posts">
           <div class="single-post" th:each="post : ${posts}">
-            <a th:href="@{/user}">
-              <img th:src="@{img/icon.jpg}" class="user-icon" alt="" />
+            <a th:href="@{/user/{uuid}(uuid=${post.user_id})}">
+              <img th:src="${post.picture}" class="user-icon" alt="" />
             </a>
             <div class="text-side">
               <div class="user-id">
-                <a th:href="@{/user}">gatinho</a>
-                <span class="user-handle">@thelittlecat</span>
+                <a th:href="@{/user/{uuid}(uuid=${post.user_id})}" th:text="${post.username}"></a>
+                <span class="user-handle" th:text="'@'+${post.handle}"></span>
               </div>
               <a th:href="@{/delete/{uuid}(uuid=${post.uuid})}">
                 <img th:src="@{/img/icons/trash.svg}" class="trash-icon" />

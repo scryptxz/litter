@@ -3,6 +3,7 @@
 :root {
   --primary-color: #1ed760;
   --secondary-color: #1c821f;
+  --background: #111311;
 }
 
 * {
@@ -13,7 +14,7 @@
 }
 
 body {
-  background-color: #111311;
+  background-color: var(--background);
   font-family: "Nunito", sans-serif;
   color: #fefffe;
 }
@@ -69,6 +70,10 @@ main {
   max-width: 100%;
 }
 
+.single-post p {
+  word-break: break-all;
+}
+
 .text-side > p {
   margin-top: 0.2em;
   line-height: 25px;
@@ -82,7 +87,7 @@ main {
 .user-icon {
   width: 50px;
   height: 50px;
-  background-color: var(--primary-color);
+  background-color: var(--background);
   border-radius: 9999px;
   flex-shrink: 0;
   margin-right: 0.5em;
@@ -162,7 +167,7 @@ form button:hover {
 .user-icon-form {
   width: 50px;
   height: 50px;
-  background-color: var(--primary-color);
+  background-color: var(--background);
   border-radius: 9999px;
   flex-shrink: 0;
   margin-left: 1em;
@@ -182,7 +187,7 @@ header {
   border-radius: 9999px;
   top: 6em;
   left: 2em;
-  border: 2px solid var(--secondary-color);
+  border: 5px solid var(--background);
 }
 
 .user-info {

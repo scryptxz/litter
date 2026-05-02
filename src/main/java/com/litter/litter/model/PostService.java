@@ -26,4 +26,8 @@ public class PostService {
     public ArrayList<Post> listPosts() {
         return postDAO.listPosts();
     }
+
+    public ArrayList<Post> listUserPosts(String uuid) {
+        return postDAO.listUserPosts(uuid);
+    }
 }
