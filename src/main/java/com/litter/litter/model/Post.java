@@ -59,7 +59,7 @@ public class Post {
 
     public static Post convert(Map<String, Object> register) {
         String content = (String) register.get("content");
-        String uuid = register.get("id") != null ? register.get("id").toString() : null;
+        String uuid = register.get("uuid") != null ? register.get("uuid").toString() : null;
         String user_id = register.get("user_id") != null ? register.get("user_id").toString() : null;
         String created_at = register.get("created_at") != null ? register.get("created_at").toString() : null;
         String username = register.get("username") != null ? register.get("username").toString() : null;

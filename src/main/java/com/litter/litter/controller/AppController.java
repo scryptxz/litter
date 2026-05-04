@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.litter.litter.model.Post;
 import com.litter.litter.model.PostService;
+import com.litter.litter.model.User;
+import com.litter.litter.model.UserService;
 
 
 
@@ -22,10 +24,13 @@ public class AppController {
     @Autowired
     private ApplicationContext context;
 
-    @GetMapping("/user/{uuid}")
-    public String listUserPosts(@PathVariable String uuid, Model model) {
+    @GetMapping("/{handle}")
+    public String listUserPosts(@PathVariable String handle, Model model) {
         PostService cs = context.getBean(PostService.class);
-        ArrayList<Post> posts = (ArrayList<Post>) cs.listUserPosts(uuid);
+        ArrayList<Post> posts = (ArrayList<Post>) cs.listUserPosts(handle);
+        UserService us = context.getBean(UserService.class);
+        User user = us.showUser(handle);
+        model.addAttribute("user", user);
         model.addAttribute("user_posts", posts);
         model.addAttribute("user_post", new Post());
         return "user";
@@ -42,8 +47,11 @@ public class AppController {
     public String listPosts(Model model) {
         PostService cs = context.getBean(PostService.class);
         ArrayList<Post> posts = (ArrayList<Post>) cs.listPosts();
+        UserService us = context.getBean(UserService.class);
+        User user = us.showUser("jun3301");
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
+        model.addAttribute("user", user);
         return "index";
     }
 
@@ -53,6 +61,14 @@ public class AppController {
         cs.deletePost(uuid);
         return "redirect:/";
     }
+
+    @GetMapping("/post/{uuid}")
+    public String showPost(@PathVariable String uuid, Model model) {
+        PostService cs = context.getBean(PostService.class);
+        Post post = cs.showPost(uuid);
+        model.addAttribute("post", post);
+        return "post";
+    }
     
-    
+
 }

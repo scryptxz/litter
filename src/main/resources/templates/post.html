@@ -23,56 +23,25 @@
           </a>
         </li>
         <li>
-          <a th:href="@{'/' + ${user.handle}}">
+          <a th:href="@{/}">
             <img th:src="@{/img/icons/user.svg}" />
             <span>Perfil</span>
           </a>
         </li>
       </ul>
       <div class="posts-container">
-        <header>
-          <img th:src="${user.picture}" id="user-icon-header" alt="" />
-        </header>
-        <div class="user-info">
-          <div class="user-id">
-            <a th:text="${user.username}"></a>
-            <span class="user-handle" th:text="'@'+${user.handle}"></span>
-          </div>
-          <ul class="user-statistics">
-            <li><span>420</span> seguidores</li>
-            <li><span>67</span> seguindo</li>
-            <li><span>2</span> posts</li>
-          </ul>
-          <p id="user-bio">I'm just a cat</p>
-        </div>
-        <ul class="user-nav">
-          <li>Posts</li>
-          <li>Mídia</li>
-          <li>Curtidas</li>
-        </ul>
-        <div class="single-post" th:each="user_post : ${user_posts}">
-          <a th:href="@{'/' + ${user_post.handle}}">
-            <img th:src="${user_post.picture}" class="user-icon" alt="" />
-          </a>
+        <div class="single-post">
+          <img th:src="@{/img/icon-3.jpg}" class="user-icon" alt="" />
           <div class="text-side">
             <div class="user-id">
-              <a th:href="@{'/' + ${user_post.handle}}" th:text="${user_post.username}"></a>
-              <span
-                class="user-handle"
-                th:text="'@'+${user_post.handle}"
-              ></span>
+              <a>Billie</a>
+              <span class="user-handle">@thebill</span>
             </div>
-            <a th:href="@{/delete/{uuid}(uuid=${user_post.uuid})}">
-              <img th:src="@{/img/icons/trash.svg}" class="trash-icon" />
-            </a>
-            <p th:text="${user_post.content}"></p>
+            <p th:text="${post.content}"></p>
             <div class="interactions">
               <img th:src="@{/img/icons/star.svg}" class="interaction-icon" />
               <img th:src="@{/img/icons/repost.svg}" class="interaction-icon" />
-              <img
-                th:src="@{/img/icons/comment.svg}"
-                class="interaction-icon"
-              />
+              <img th:src="@{/img/icons/comment.svg}" class="interaction-icon" />
             </div>
           </div>
         </div>

@@ -1,12 +1,12 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Litter</title>
     <link rel="stylesheet" th:href="@{css/index.css}" />
     <script th:src="@{js/index.js}"></script>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   </head>
   <body>
     <main>
@@ -23,7 +23,7 @@
           </a>
         </li>
         <li>
-          <a th:href="@{/user}">
+          <a th:href="@{'/' + ${user.handle}}">
             <img th:src="@{img/icons/user.svg}" />
             <span>Perfil</span>
           </a>
@@ -32,8 +32,8 @@
       <div class="posts-container">
         <form action="#" th:action="@{/post}" method="post" th:object="${post}">
           <div class="icon-textarea">
-            <a th:href="@{/user}">
-              <img th:src="@{img/icon.jpg}" class="user-icon-form" alt="" />
+            <a th:href="@{/{handle}(handle=${user.handle})}">
+              <img th:src="${user.picture}" class="user-icon-form" alt="" />
             </a>
             <textarea
               th:field="*{content}"
@@ -45,30 +45,38 @@
         </form>
         <div class="db-posts">
           <div class="single-post" th:each="post : ${posts}">
-            <a th:href="@{/user/{uuid}(uuid=${post.user_id})}">
+            <a th:href="@{/{handle}(handle=${post.handle})}">
               <img th:src="${post.picture}" class="user-icon" alt="" />
             </a>
-            <div class="text-side">
-              <div class="user-id">
-                <a th:href="@{/user/{uuid}(uuid=${post.user_id})}" th:text="${post.username}"></a>
-                <span class="user-handle" th:text="'@'+${post.handle}"></span>
+            <a th:href="@{/post/{uuid}(uuid=${post.uuid})}">SSSSSS
+              <div class="text-side">
+                <div class="user-id">
+                  <a
+                    th:href="@{/{handle}(handle=${post.handle})}"
+                    th:text="${post.username}"
+                  ></a>
+                  <span class="user-handle" th:text="'@'+${post.handle}"></span>
+                </div>
+                <a th:href="@{/delete/{uuid}(uuid=${post.uuid})}">
+                  <img th:src="@{/img/icons/trash.svg}" class="trash-icon" />
+                </a>
+                <p th:text="${post.content}"></p>
+                <div class="interactions">
+                  <img
+                    th:src="@{img/icons/star.svg}"
+                    class="interaction-icon"
+                  />
+                  <img
+                    th:src="@{img/icons/repost.svg}"
+                    class="interaction-icon"
+                  />
+                  <img
+                    th:src="@{img/icons/comment.svg}"
+                    class="interaction-icon"
+                  />
+                </div>
               </div>
-              <a th:href="@{/delete/{uuid}(uuid=${post.uuid})}">
-                <img th:src="@{/img/icons/trash.svg}" class="trash-icon" />
-              </a>
-              <p th:text="${post.content}"></p>
-              <div class="interactions">
-                <img th:src="@{img/icons/star.svg}" class="interaction-icon" />
-                <img
-                  th:src="@{img/icons/repost.svg}"
-                  class="interaction-icon"
-                />
-                <img
-                  th:src="@{img/icons/comment.svg}"
-                  class="interaction-icon"
-                />
-              </div>
-            </div>
+            </a>
           </div>
         </div>
         <div class="single-post">
