@@ -44,8 +44,49 @@
               <span class="user-handle" th:text="'@'+${post.handle}"></span>
             </div>
             <p th:text="${post.content}"></p>
+            <div th:if="${post.user_id == user.id}">
+              <button
+                type="button"
+                class="edit-post-btn"
+                th:data-modal-id="${'editModal_' + post.uuid}"
+                onclick="
+                  document.getElementById(this.dataset.modalId).style.display =
+                    'block'
+                "
+              >
+                Editar
+              </button>
+            </div>
+
+            <div
+              class="modal"
+              th:id="'editModal_' + ${post.uuid}"
+              style="display: none"
+            >
+              <form th:action="@{/post/update}" method="post">
+                <input type="hidden" name="uuid" th:value="${post.uuid}" />
+                <textarea
+                  name="content"
+                  maxlength="256"
+                  th:text="${post.content}"
+                ></textarea>
+                <button type="submit">Salvar</button>
+                <button
+                  type="button"
+                  th:data-modal-id="${'editModal_' + post.uuid}"
+                  onclick="
+                    document.getElementById(
+                      this.dataset.modalId,
+                    ).style.display = 'none'
+                  "
+                >
+                  Cancelar
+                </button>
+              </form>
+            </div>
           </div>
         </div>
+
         <div class="interactions-single-post">
           <div class="">
             <img th:src="@{/img/icons/star.svg}" class="interaction-icon" />

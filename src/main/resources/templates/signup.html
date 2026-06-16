@@ -8,14 +8,43 @@
   </head>
   <body>
     <main>
-      <form th:action="@{/signup}" method="post" th:object="${user}">
-        <input type="file" th:field="*{picture}" name="file" accept="image/*" />
-        <input type="text" th:field="*{username}" placeholder="Seu nome (Ex. John Doe)" />
-        <input type="text" th:field="*{handle}" placeholder="Nickname (Ex. johndoe)" />
+      <form
+        class="signup-form"
+        th:action="@{/signup}"
+        method="post"
+        th:object="${user}"
+      >
+        <label for="picture" class="profile-picture">
+          <img
+            id="preview"
+            src="/img/default-icon.png"
+            alt="Profile Picture"
+          />
+        </label>
+
+        <input
+          id="picture"
+          type="file"
+          th:field="*{picture}"
+          accept="image/*"
+          hidden
+        />
+
+        <input
+          type="text"
+          th:field="*{username}"
+          placeholder="Seu nome (Ex. John Doe)"
+        />
+        <input
+          type="text"
+          th:field="*{handle}"
+          placeholder="Nickname (Ex. johndoe)"
+        />
         <input type="password" th:field="*{password}" placeholder="Senha" />
-        <!-- <input type="text" th:field="*{password}" placeholder="Confirmar senha" /> -->
+
         <button>Cadastrar</button>
       </form>
     </main>
   </body>
+  <script th:src="@{/js/index.js}"></script>
 </html>

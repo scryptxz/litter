@@ -4,7 +4,7 @@
  */
 package com.litter.litter.model;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
@@ -14,14 +14,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    @Autowired
-    UserDAO userDAO;
+    private final UserDAO userDAO;
+    private final PasswordEncoder passwordEncoder;
+
+    public UserService(UserDAO userDAO, PasswordEncoder passwordEncoder) {
+        this.userDAO = userDAO;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User showUser(String handle) {
         return userDAO.showUser(handle);
     }
 
     public void insertUser(User user) {
+        // Encode plaintext password before persisting.
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.insertUser(user);
     }
 }
+
+

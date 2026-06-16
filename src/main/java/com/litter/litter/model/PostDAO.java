@@ -29,7 +29,8 @@ public class PostDAO {
         Object[] obj = new Object[2];
 
         obj[0] = post.getContent();
-        obj[1] = "fd6d4acf-ebab-4610-8b18-56609c49445f";
+        obj[1] = post.getUser_id();
+
 
         jdbc.update(sql, obj);
     }
@@ -40,9 +41,16 @@ public class PostDAO {
         Object[] obj = new Object[3];
 
         obj[0] = post.getContent();
-        obj[1] = "fd6d4acf-ebab-4610-8b18-56609c49445f";
+        obj[1] = post.getUser_id();
+
         obj[2] = post_uuid;
 
+        jdbc.update(sql, obj);
+    }
+
+    public void updatePost(String uuid, String content) {
+        String sql = "UPDATE POSTS SET CONTENT = ? WHERE UUID = ?::uuid";
+        Object[] obj = new Object[] { content, uuid };
         jdbc.update(sql, obj);
     }
 
@@ -50,6 +58,7 @@ public class PostDAO {
         String sql = "DELETE FROM POSTS WHERE UUID=?::uuid";
         jdbc.update(sql, uuid);
     }
+
 
     public Post showPost(String uuid) {
         String sql = "SELECT P.UUID, P.CONTENT, U.HANDLE, P.USER_ID, U.USERNAME, U.PICTURE, P.CREATED_AT, P.REPLY_POST_ID, COUNT(R.UUID) AS REPLY_COUNT "

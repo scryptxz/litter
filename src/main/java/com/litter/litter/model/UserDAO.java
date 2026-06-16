@@ -31,8 +31,8 @@ public class UserDAO {
         Object[] obj = new Object[4];
 
         obj[0] = user.getUsername();
-        obj[1] = user.getUsername();
-        obj[2] = user.getHandle();
+        obj[1] = user.getHandle();
+        obj[2] = user.getPassword();
         obj[3] = user.getPicture();
 
         jdbc.update(sql, obj);

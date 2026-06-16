@@ -59,12 +59,15 @@ public class AppController {
         PostService cs = context.getBean(PostService.class);
         ArrayList<Post> posts = (ArrayList<Post>) cs.listPosts();
         UserService us = context.getBean(UserService.class);
-        User user = us.showUser("jun3301");
+        // With Spring Security configured, authentication name is USERS.HANDLE
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        User user = us.showUser(auth.getName());
         model.addAttribute("posts", posts);
         model.addAttribute("post", new Post());
         model.addAttribute("user", user);
         return "index";
     }
+
 
     @GetMapping("/delete/{uuid}")
     public String deletePost(@PathVariable String uuid, Model model, HttpServletRequest request) {
@@ -79,7 +82,8 @@ public class AppController {
         PostService cs = context.getBean(PostService.class);
         Post post = cs.showPost(uuid);
         UserService us = context.getBean(UserService.class);
-        User user = us.showUser("jun3301");
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        User user = us.showUser(auth.getName());
         ArrayList<Post> posts = (ArrayList<Post>) cs.listReplyPosts(uuid);
         model.addAttribute("reply", new Post());
         model.addAttribute("post", post);
@@ -87,6 +91,7 @@ public class AppController {
         model.addAttribute("posts", posts);
         return "post";
     }
+
 
     @GetMapping("/signup")
     public String signUp(Model model) {
