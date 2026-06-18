@@ -87,7 +87,7 @@ main {
 }
 
 .user-post:hover {
-  background-color: inherit
+  background-color: inherit;
 }
 
 .text-side > p {
@@ -109,7 +109,8 @@ main {
   margin-right: 0.5em;
 }
 
-.trash-icon, .pencil-icon {
+.trash-icon,
+.pencil-icon {
   position: absolute;
   top: 12px;
   right: 8px;
@@ -158,6 +159,18 @@ main {
 
 /* FORM */
 
+.modal textarea {
+  background: transparent;
+  padding: 1em;
+  border-radius: 0.5em;
+  border: 1px solid #313131;
+  resize: none;
+  outline: none;
+  color: var(--white);
+  width: 100%;
+  margin-left: -2em;
+}
+
 .post-form {
   padding: 1em 0 0;
   text-align: end;
@@ -176,7 +189,8 @@ main {
   margin: 0 0.5em;
 }
 
-.post-form button {
+.post-form button,
+.modal button {
   background: transparent;
   color: var(--white);
   border: 1px solid var(--secondary-color);
@@ -318,8 +332,8 @@ header {
 .signout {
   color: var(--white);
   background-color: #910404;
-  padding: .2em;
-  border-radius: .5em;
+  padding: 0.2em;
+  border-radius: 0.5em;
   width: 5em;
 }
 
@@ -362,7 +376,7 @@ header {
 .post-back {
   display: flex;
   align-items: center;
-  margin: 1em 0 .5em 1em;
+  margin: 1em 0 0.5em 1em;
   font-weight: bold;
   font-size: 1.2rem;
   gap: 0 1.5em;

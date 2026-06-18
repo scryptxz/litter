@@ -69,7 +69,10 @@
                 th:text="'@'+${user_post.handle}"
               ></span>
             </div>
-            <a th:href="@{/delete/{uuid}(uuid=${user_post.uuid})}" th:if="${post.handle == user.handle}">
+            <a
+              th:href="@{/delete/{uuid}(uuid=${user_post.uuid})}"
+              th:if="${user_post.handle == loggedUser.handle}"
+            >
               <img th:src="@{/img/icons/trash.svg}" class="trash-icon" />
             </a>
             <p th:text="${user_post.content}"></p>

@@ -32,8 +32,16 @@ public class AppController {
         PostService cs = context.getBean(PostService.class);
         ArrayList<Post> posts = (ArrayList<Post>) cs.listUserPosts(handle);
         UserService us = context.getBean(UserService.class);
+
+        // Profile being viewed
         User user = us.showUser(handle);
+
+        // Currently authenticated user
+        org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser = us.showUser(auth.getName());
+
         model.addAttribute("user", user);
+        model.addAttribute("loggedUser", loggedUser);
         model.addAttribute("user_posts", posts);
         model.addAttribute("user_post", new Post());
         return "user";
@@ -109,7 +117,6 @@ public class AppController {
 
         if (pictureFile != null && !pictureFile.isEmpty()) {
 
-            // Upload to Cloudinary and store the returned secure URL
             String cloudName = System.getenv("CLOUDINARY_CLOUD_NAME");
             String apiKey = System.getenv("CLOUDINARY_API_KEY");
             String apiSecret = System.getenv("CLOUDINARY_API_SECRET");
@@ -122,13 +129,10 @@ public class AppController {
 
             String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
 
-            String signatureBase = "public_id="; // required by Cloudinary signature; we use default public_id
+            String signatureBase = "public_id=";
             String publicId = null;
             String signature;
             try {
-                // Cloudinary recommends using sha256 of (public_id + timestamp + api_secret) depending on params.
-                // For simplicity we use Cloudinary's built-in auto-signature by sending required params with the SDK style.
-                // Here we compute signature for a fixed 'timestamp' + 'api_secret' + 'folder'
                 signatureBase = "folder=users&timestamp=" + timestamp;
                 javax.crypto.Mac mac = javax.crypto.Mac.getInstance("HmacSHA256");
                 javax.crypto.spec.SecretKeySpec secretKey = new javax.crypto.spec.SecretKeySpec(apiSecret.getBytes(java.nio.charset.StandardCharsets.UTF_8), "HmacSHA256");
@@ -139,14 +143,7 @@ public class AppController {
                 throw new RuntimeException("Failed to generate Cloudinary signature", e);
             }
 
-            // We will send an unsigned upload only if signature generation fails? No.
-            // Cloudinary signed uploads require correct signature; if your signature differs, set your Cloudinary
-            // preset to unsigned and we can switch to unsigned.
-
             String folder = "users";
-
-            // TODO: If you use an unsigned upload preset, set 'upload_preset' and remove signature.
-            // For now, attempt signed upload using 'api_key' + 'timestamp' + 'folder' + computed signature.
             String secureUrl = com.litter.litter.util.CloudinaryUploadUtil.uploadImageToCloudinary(
                     pictureFile.getBytes(),
                     pictureFile.getOriginalFilename(),
