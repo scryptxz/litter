@@ -36,11 +36,16 @@
           </button>
           <h1>Post</h1>
         </div>
-        <div class="single-post">
-          <img th:src="${post.picture}" class="user-icon" alt="" />
+        <div class="single-post user-post">
+          <a th:href="@{/{handle}(handle=${post.handle})}">
+            <img th:src="${post.picture}" class="user-icon" alt="" />
+          </a>
           <div class="text-side">
             <div class="user-id">
-              <a th:text="${post.username}"></a>
+              <a
+                th:text="${post.username}"
+                th:href="@{/{handle}(handle=${post.handle})}"
+              ></a>
               <span class="user-handle" th:text="'@'+${post.handle}"></span>
             </div>
             <p th:text="${post.content}"></p>
@@ -54,7 +59,7 @@
                     'block'
                 "
               >
-                Editar
+                <img th:src="@{/img/icons/pencil.svg}" class="pencil-icon" />
               </button>
             </div>
 
@@ -105,6 +110,7 @@
           action="#"
           th:action="@{/reply_post/{post_uuid}(post_uuid=${post.uuid})}"
           method="post"
+          class="post-form"
           th:object="${reply}"
         >
           <div class="icon-textarea">
@@ -113,7 +119,7 @@
             </a>
             <textarea
               th:field="*{content}"
-              placeholder="Mande sua reposta"
+              placeholder="Mande sua resposta"
               maxlength="256"
             ></textarea>
           </div>
@@ -135,7 +141,10 @@
               ></a>
               <span class="user-handle" th:text="'@'+${post.handle}"></span>
             </div>
-            <a th:href="@{/delete/{uuid}(uuid=${post.uuid})}">
+            <a
+              th:href="@{/delete/{uuid}(uuid=${post.uuid})}"
+              th:if="${post.handle == user.handle}"
+            >
               <img th:src="@{/img/icons/trash.svg}" class="trash-icon" />
             </a>
             <p th:text="${post.content}"></p>

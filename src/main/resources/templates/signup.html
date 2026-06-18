@@ -7,21 +7,17 @@
     <title>Cadastrar</title>
   </head>
   <body>
-    <main>
+    <main class="auth-main">
       <form
-        class="signup-form"
+        class="auth-form"
         th:action="@{/signup}"
         method="post"
         enctype="multipart/form-data"
         th:object="${user}"
+        autocomplete="off"
       >
-        <label for="picture" class="profile-picture">
-          <img
-            id="preview"
-            src="/img/default-icon.png"
-            alt="Profile Picture"
-          />
-        </label>
+        <img th:src="@{img/litter-logo.png}" id="litter-logo" />
+
 
         <input
           id="picture"
@@ -34,16 +30,24 @@
         <input
           type="text"
           th:field="*{username}"
-          placeholder="Seu nome (Ex. John Doe)"
+          placeholder="Nome do pet (Ex. Trovão)"
         />
         <input
           type="text"
           th:field="*{handle}"
-          placeholder="Nickname (Ex. johndoe)"
+          placeholder="Username (Ex. trovinho)"
         />
         <input type="password" th:field="*{password}" placeholder="Senha" />
 
+        <label for="picture" class="profile-picture">
+          <img id="preview" src="/img/default-icon.png" alt="Profile Picture" />
+        </label>
+
         <button>Cadastrar</button>
+        <p>
+          Já possui uma conta?
+          <a th:href="@{/login}" id="link-cadastro">Entre aqui.</a>
+        </p>
       </form>
     </main>
   </body>

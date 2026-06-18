@@ -29,16 +29,13 @@
           </a>
         </li>
         <li>
-          <a th:href="@{/signup}">Cadastrar</a>
-        </li>
-        <li>
-          <form th:action="@{/logout}" method="post" style="display:inline;">
+          <form th:action="@{/logout}" method="post">
             <button type="submit" class="signout">Sair</button>
           </form>
         </li>
       </ul>
       <div class="posts-container">
-        <form th:action="@{/post}" method="post" th:object="${post}">
+        <form class="post-form" th:action="@{/post}" method="post" th:object="${post}">
           <div class="icon-textarea">
             <a th:href="@{/{handle}(handle=${user.handle})}">
               <img th:src="${user.picture}" class="user-icon-form" alt="" />
@@ -71,7 +68,6 @@
                 <span class="user-handle" th:text="'@'+${post.handle}"></span>
               </div>
               <a th:href="@{/delete/{uuid}(uuid=${post.uuid})}" th:if="${post.handle == user.handle}">
-
                 <img th:src="@{/img/icons/trash.svg}" class="trash-icon" />
               </a>
               <p th:text="${post.content}"></p>

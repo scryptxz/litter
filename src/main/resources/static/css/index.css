@@ -3,6 +3,7 @@
 :root {
   --primary-color: #1ed760;
   --secondary-color: #1c821f;
+  --white: #fefffe;
   --background: #111311;
 }
 
@@ -16,7 +17,7 @@
 body {
   background-color: var(--background);
   font-family: "Nunito", sans-serif;
-  color: #fefffe;
+  color: var(--white);
 }
 
 button {
@@ -27,7 +28,7 @@ button {
 
 p,
 h2 {
-  color: #fefffe;
+  color: var(--white);
 }
 
 .user-handle {
@@ -81,6 +82,14 @@ main {
   background-color: #0d0f0d;
 }
 
+.user-post {
+  cursor: default;
+}
+
+.user-post:hover {
+  background-color: inherit
+}
+
 .text-side > p {
   margin-top: 0.2em;
   line-height: 25px;
@@ -100,7 +109,7 @@ main {
   margin-right: 0.5em;
 }
 
-.trash-icon {
+.trash-icon, .pencil-icon {
   position: absolute;
   top: 12px;
   right: 8px;
@@ -109,7 +118,7 @@ main {
 }
 
 .user-id > a {
-  color: #fefffe;
+  color: var(--white);
   font-weight: bold;
   text-decoration: none;
 }
@@ -138,7 +147,7 @@ main {
 .interaction-icon {
   width: 18px;
   cursor: pointer;
-} 
+}
 
 .interactions-single-post {
   display: flex;
@@ -149,27 +158,27 @@ main {
 
 /* FORM */
 
-form {
+.post-form {
   padding: 1em 0 0;
   text-align: end;
   border-bottom: 1px solid #2b2e2b;
 }
 
-form textarea {
+.post-form textarea {
   background: transparent;
   padding: 1em;
   border-radius: 0.5em;
   border: 1px solid #2b2e2b;
   resize: none;
   outline: none;
-  color: #fefffe;
+  color: var(--white);
   width: 100%;
   margin: 0 0.5em;
 }
 
-form button {
+.post-form button {
   background: transparent;
-  color: #fefffe;
+  color: var(--white);
   border: 1px solid var(--secondary-color);
   padding: 0.3em 1.5em;
   cursor: pointer;
@@ -177,7 +186,7 @@ form button {
   margin: 1em 2em;
 }
 
-form button:hover {
+.post-form button:hover {
   background: #2b2e2b;
 }
 
@@ -264,7 +273,7 @@ header {
   position: fixed;
   top: 10px;
   left: 1em;
-  color: #fefffe;
+  color: var(--white);
   text-decoration: none;
   font-weight: bold;
   background-color: var(--secondary-color);
@@ -306,6 +315,14 @@ header {
   border-radius: 10em;
 }
 
+.signout {
+  color: var(--white);
+  background-color: #910404;
+  padding: .2em;
+  border-radius: .5em;
+  width: 5em;
+}
+
 /* TRENDS */
 
 .trends {
@@ -345,7 +362,7 @@ header {
 .post-back {
   display: flex;
   align-items: center;
-  margin: 1em 0 1em 1em;
+  margin: 1em 0 .5em 1em;
   font-weight: bold;
   font-size: 1.2rem;
   gap: 0 1.5em;
@@ -355,72 +372,78 @@ header {
   display: block;
 }
 
-/* SIGN UP */
+/* AUTH PAGE */
 
-.signup-form {
-  width: 100%;
-  max-width: 420px;
-  padding: 32px;
-  border: 2px solid var(--primary-color);
-  border-radius: 12px;
+#litter-logo {
+  width: 200px;
+  align-self: center;
+  margin-bottom: 1em;
+}
 
+#link-cadastro {
+  color: var(--primary-color);
+}
+
+#link-cadastro:hover {
+  text-decoration: underline;
+}
+
+.auth-main {
   display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100svh;
+}
+
+.auth-form {
+  border: 1px solid #323332;
+  display: flex;
+  gap: 1.5em;
+  width: 22em;
   flex-direction: column;
-  gap: 16px;
+  justify-content: center;
+  padding: 4em 3em;
+  border-radius: 0.5em;
 }
 
-.signup-form input {
-  width: 100%;
-  padding: 14px;
-  background: var(--background);
-  border: 1px solid var(--secondary-color);
-  border-radius: 8px;
-  color: var(--primary-color);
-  font-size: 0.95rem;
-}
-
-.signup-form input::placeholder {
-  color: var(--secondary-color);
-  opacity: .5;
-}
-
-.signup-form input:focus {
+.auth-form input {
+  color: var(--white);
+  background-color: #1b1d1b;
+  border: none;
   outline: none;
-  border-color: var(--primary-color);
+  padding: 1em;
+  border-radius: 0.5em;
 }
 
-.signup-form input[type="file"] {
-  padding: 10px;
+.auth-form input::placeholder {
+  color: #434443;
 }
 
-.signup-form input[type="file"]::file-selector-button {
-  background: var(--secondary-color);
-  color: var(--primary-color);
-  border: none;
-  border-radius: 6px;
-  padding: 10px 14px;
-  cursor: pointer;
-  margin-right: 12px;
+.auth-form button {
+  background-color: var(--primary-color);
+  width: 100%;
+  padding: 1em;
+  border-radius: 0.5em;
+  font-weight: 700;
 }
 
-.signup-form button {
-  padding: 14px;
-  border: none;
-  border-radius: 8px;
-  background: var(--primary-color);
-  color: var(--background);
-  font-weight: bold;
-  cursor: pointer;
+.auth-form button:hover {
+  background-color: #19bb52;
 }
 
-.signup-form button:hover {
-  background: var(--secondary-color);
-  color: var(--primary-color);
+#incorrect-credentials {
+  color: #b61010;
+  font-weight: 700;
+}
+
+#logout-message {
+  color: #be9613;
+  font-weight: 700;
 }
 
 .profile-picture {
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
   margin: 0 auto 8px;
   border: 2px solid var(--primary-color);
   border-radius: 50%;
@@ -435,7 +458,6 @@ header {
   object-fit: cover;
   background: var(--background);
 }
-
 
 @media (max-width: 1000px) {
   .left-menu,

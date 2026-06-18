@@ -7,14 +7,14 @@
     <link rel="stylesheet" th:href="@{/css/index.css}" />
   </head>
   <body>
-    <main>
-      <form class="login-form" th:action="@{/login}" method="post">
-        <h2>Login</h2>
+    <main class="auth-main">
+      <form class="auth-form" th:action="@{/login}" method="post" autocomplete="off">
+        <img th:src="@{img/litter-logo.png}" id="litter-logo" />
 
         <input
           type="text"
           name="username"
-          placeholder="Handle"
+          placeholder="Username"
           autocomplete="username"
         />
 
@@ -26,11 +26,11 @@
         />
 
         <button type="submit">Entrar</button>
+        <p>Não possui uma conta? <a th:href="@{/signup}" id="link-cadastro">Cadastre uma aqui.</a></p>
 
-        <p th:if="${param.error}">Credenciais inválidas</p>
-        <p th:if="${param.logout}">Você saiu.</p>
+        <p th:if="${param.error}" id="incorrect-credentials">Username ou senha incorretos, tente novamente</p>
+        <p th:if="${param.logout}" id="logout-message">Você saiu da sua conta.</p>
       </form>
     </main>
   </body>
 </html>
-
