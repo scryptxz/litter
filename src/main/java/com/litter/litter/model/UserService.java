@@ -27,7 +27,6 @@ public class UserService {
     }
 
     public void insertUser(User user) {
-        // Encode plaintext password before persisting.
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         userDAO.insertUser(user);
     }

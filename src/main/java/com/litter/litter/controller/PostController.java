@@ -30,9 +30,6 @@ public class PostController {
         String handle = auth.getName();
 
         var currentUser = userService.showUser(handle);
-
-        // Security check: only allow updating own post.
-        // We rely on the UI to send proper values, but we still enforce ownership here.
         var post = postService.showPost(uuid);
         if (post != null && post.getUser_id() != null && post.getUser_id().equals(currentUser.getId())) {
             postService.updatePost(uuid, content);

@@ -24,12 +24,10 @@ public class SecurityConfig {
     public UserDetailsService userDetailsService(DataSource dataSource) {
         JdbcUserDetailsManager manager = new JdbcUserDetailsManager(dataSource);
 
-        // login by USERS.HANDLE
         manager.setUsersByUsernameQuery(
                 "SELECT HANDLE as username, PASSWORD as password, true as enabled FROM USERS WHERE HANDLE = ?"
         );
 
-        // no roles in your schema; provide a default authority for authenticated() to work
         manager.setAuthoritiesByUsernameQuery(
                 "SELECT HANDLE as username, 'ROLE_USER' as authority FROM USERS WHERE HANDLE = ?"
         );

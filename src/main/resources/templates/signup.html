@@ -12,6 +12,7 @@
         class="signup-form"
         th:action="@{/signup}"
         method="post"
+        enctype="multipart/form-data"
         th:object="${user}"
       >
         <label for="picture" class="profile-picture">
@@ -24,8 +25,8 @@
 
         <input
           id="picture"
+          name="picture"
           type="file"
-          th:field="*{picture}"
           accept="image/*"
           hidden
         />

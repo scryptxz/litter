@@ -2,7 +2,6 @@ package com.litter.litter.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Base64;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -59,7 +58,6 @@ public class AppController {
         PostService cs = context.getBean(PostService.class);
         ArrayList<Post> posts = (ArrayList<Post>) cs.listPosts();
         UserService us = context.getBean(UserService.class);
-        // With Spring Security configured, authentication name is USERS.HANDLE
         org.springframework.security.core.Authentication auth = org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication();
         User user = us.showUser(auth.getName());
         model.addAttribute("posts", posts);
@@ -67,7 +65,6 @@ public class AppController {
         model.addAttribute("user", user);
         return "index";
     }
-
 
     @GetMapping("/delete/{uuid}")
     public String deletePost(@PathVariable String uuid, Model model, HttpServletRequest request) {
@@ -92,7 +89,6 @@ public class AppController {
         return "post";
     }
 
-
     @GetMapping("/signup")
     public String signUp(Model model) {
         model.addAttribute("user", new User());
@@ -100,18 +96,80 @@ public class AppController {
     }
 
     @PostMapping("/signup")
-    public String insertUser(@ModelAttribute User user, Model model) {
+    public String insertUser(
+            @RequestParam("username") String username,
+            @RequestParam("handle") String handle,
+            @RequestParam("password") String password,
+            @RequestParam(name = "picture", required = false) MultipartFile pictureFile) throws IOException {
+
+        User user = new User();
+        user.setUsername(username);
+        user.setHandle(handle);
+        user.setPassword(password);
+
+        if (pictureFile != null && !pictureFile.isEmpty()) {
+
+            // Upload to Cloudinary and store the returned secure URL
+            String cloudName = System.getenv("CLOUDINARY_CLOUD_NAME");
+            String apiKey = System.getenv("CLOUDINARY_API_KEY");
+            String apiSecret = System.getenv("CLOUDINARY_API_SECRET");
+
+            if (cloudName == null || apiKey == null || apiSecret == null) {
+                throw new IllegalStateException("Missing Cloudinary environment variables (CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_API_SECRET)");
+            }
+
+            String uploadUrl = "https://api.cloudinary.com/v1_1/" + cloudName + "/image/upload";
+
+            String timestamp = String.valueOf(System.currentTimeMillis() / 1000);
+
+            String signatureBase = "public_id="; // required by Cloudinary signature; we use default public_id
+            String publicId = null;
+            String signature;
+            try {
+                // Cloudinary recommends using sha256 of (public_id + timestamp + api_secret) depending on params.
+                // For simplicity we use Cloudinary's built-in auto-signature by sending required params with the SDK style.
+                // Here we compute signature for a fixed 'timestamp' + 'api_secret' + 'folder'
+                signatureBase = "folder=users&timestamp=" + timestamp;
+                javax.crypto.Mac mac = javax.crypto.Mac.getInstance("HmacSHA256");
+                javax.crypto.spec.SecretKeySpec secretKey = new javax.crypto.spec.SecretKeySpec(apiSecret.getBytes(java.nio.charset.StandardCharsets.UTF_8), "HmacSHA256");
+                mac.init(secretKey);
+                byte[] rawHmac = mac.doFinal(signatureBase.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+                signature = java.util.Base64.getEncoder().encodeToString(rawHmac);
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to generate Cloudinary signature", e);
+            }
+
+            // We will send an unsigned upload only if signature generation fails? No.
+            // Cloudinary signed uploads require correct signature; if your signature differs, set your Cloudinary
+            // preset to unsigned and we can switch to unsigned.
+
+            String folder = "users";
+
+            // TODO: If you use an unsigned upload preset, set 'upload_preset' and remove signature.
+            // For now, attempt signed upload using 'api_key' + 'timestamp' + 'folder' + computed signature.
+            String secureUrl = com.litter.litter.util.CloudinaryUploadUtil.uploadImageToCloudinary(
+                    pictureFile.getBytes(),
+                    pictureFile.getOriginalFilename(),
+                    cloudName,
+                    apiKey,
+                    apiSecret,
+                    folder
+            );
+
+            user.setPicture(secureUrl);
+
+        } else if (user.getPicture() == null) {
+            user.setPicture("/img/default-icon.png");
+        }
+
+
         UserService us = context.getBean(UserService.class);
         us.insertUser(user);
         return "redirect:/";
-    }
 
+    }
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, Model model) throws IOException {
-        byte[] imageBytes = file.getBytes();
-        String base64Image = Base64.getEncoder().encodeToString(imageBytes);
-        model.addAttribute("image", base64Image);
-
         return "signup";
     }
 

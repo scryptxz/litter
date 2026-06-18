@@ -18,7 +18,6 @@ public class PostService {
 
     private User currentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        // With Spring Security configured, auth.getName() is USERS.HANDLE
         String handle = auth.getName();
         return userService.showUser(handle);
     }

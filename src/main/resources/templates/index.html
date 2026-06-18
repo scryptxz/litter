@@ -31,6 +31,11 @@
         <li>
           <a th:href="@{/signup}">Cadastrar</a>
         </li>
+        <li>
+          <form th:action="@{/logout}" method="post" style="display:inline;">
+            <button type="submit" class="signout">Sair</button>
+          </form>
+        </li>
       </ul>
       <div class="posts-container">
         <form th:action="@{/post}" method="post" th:object="${post}">
